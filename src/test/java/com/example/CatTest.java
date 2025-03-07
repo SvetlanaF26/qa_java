@@ -31,13 +31,8 @@ public class CatTest {
     }
 
     @Test
-   public void shouldReturnMeatList() throws Exception {
-
-        try {
-            when(felineMock.eatMeat()).thenReturn(List.of("Мясо"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public void shouldReturnMeatList() throws Exception {
+        when(felineMock.eatMeat()).thenReturn(List.of("Мясо"));
 
         assertEquals(List.of("Мясо"), cat.getFood());
 

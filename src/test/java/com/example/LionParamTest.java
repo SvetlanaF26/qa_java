@@ -6,8 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
 @Category(LionTest.class)
@@ -15,9 +14,9 @@ public class LionParamTest {
     @Mock
     private FelineInterface felineMock;
 
-    private final String  sex;
+    private final String sex;
     private final boolean expectedHasMane;
-    private final String  expectedExceptionText;
+    private final String expectedExceptionText;
 
     public LionParamTest(String sex, boolean expectedHasMane, String expectedExceptionText) {
         this.sex = sex;
@@ -35,14 +34,13 @@ public class LionParamTest {
     }
 
     @Test
-    public void testHaveMane() {
-        try {
+    public void testHaveMane() throws Exception {
+        if (expectedExceptionText == null) {
             Lion lion = new Lion(this.sex, felineMock);
             assertEquals(expectedHasMane, lion.doesHaveMane());
-            assertNull(expectedExceptionText);
-
-        } catch (Exception e) {
-            assertEquals(expectedExceptionText, e.getMessage());
+        } else {
+            Exception exception = assertThrows(Exception.class, () -> new Lion(this.sex, felineMock));
+            assertEquals(expectedExceptionText, exception.getMessage());
         }
     }
 }
